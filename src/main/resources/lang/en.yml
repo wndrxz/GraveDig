@@ -1,0 +1,30 @@
+# GraveDig messages, MiniMessage format.
+prefix: "<gradient:#7a5c2e:#c9a66b>[GraveDig]</gradient> "
+
+death:
+  grave-created: "<gray>Your grave is at <coords><gray>. Bring a brush.</gray>"
+  protected-for: "<gray>Only you can dig it for <minutes> min.</gray>"
+
+dig:
+  protected: "<red>This grave still belongs to <owner>.</red>"
+  portion-armor: "<green>You brush out the armor.</green>"
+  portion-hotbar: "<green>You brush out the hotbar items.</green>"
+  portion-rest: "<green>You brush out the rest of the stuff.</green>"
+  xp: "<aqua>+<xp> xp recovered.</aqua>"
+  done: "<gray>The grave crumbles away.</gray>"
+
+grave:
+  now-public: "<yellow>Your grave at <coords> <yellow>is no longer protected.</yellow>"
+  expired: "<gray>Your grave at <coords> <gray>has expired.</gray>"
+
+command:
+  reloaded: "<green>Config and locales reloaded.</green>"
+  no-permission: "<red>You can't do that.</red>"
+  usage: "<gray>usage: /gravedig reload | list</gray>"
+  list-header: "<gray>Your graves:</gray>"
+  list-entry: "<gray> - <coords> <gray>portions left: <portions></gray>"
+  list-empty: "<gray>No graves. Stay alive.</gray>"
+
+startup:
+  enabled: "GraveDig enabled, locale: <locale>"
+  disabled: "GraveDig disabled"

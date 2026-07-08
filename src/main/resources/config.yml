@@ -1,0 +1,36 @@
+# GraveDig config. Defaults are tuned for quick manual testing,
+# bump the timers for a real server.
+
+# locale: auto = pick from JVM default, fallback en. shipped: en, ru
+locale: auto
+
+grave:
+  enabled: true
+  # auto = suspicious sand on sandy ground, suspicious gravel otherwise.
+  # can pin it: SUSPICIOUS_SAND or SUSPICIOUS_GRAVEL
+  block: auto
+  # minutes the grave is owner-only. 0 = public right away
+  protect-minutes: 5
+  # minutes until the grave expires and is gone. 0 = never
+  expire-minutes: 30
+  # drop leftover items on the ground when the grave expires
+  drop-on-expire: true
+  # breaking the block dumps everything at once (protection still applies)
+  break-drops-all: true
+
+dig:
+  # right-clicks with a brush needed to free one portion.
+  # 2 is fast for testing, vanilla brushing feel is more like 5-6
+  clicks-per-portion: 2
+  # brushing sound + particles on each click
+  effects: true
+
+xp:
+  enabled: true
+  # how much of the player's total xp goes into the grave, 0.0..1.0.
+  # vanilla only drops a tiny bit, we default to everything
+  percent: 1.0
+
+messages:
+  # clickable coords in death message (copy to clipboard)
+  death-coords: true

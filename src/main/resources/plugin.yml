@@ -1,0 +1,21 @@
+name: GraveDig
+version: '${version}'
+main: dev.wndrxz.gravedig.GraveDig
+api-version: '1.20'
+folia-supported: true
+authors: [wndrxz]
+description: death drops a brushable grave block, dig your stuff back in portions
+
+commands:
+  gravedig:
+    description: gravedig admin/info commands
+    usage: /gravedig <reload|list>
+    aliases: [gd]
+
+permissions:
+  gravedig.use:
+    description: allows /gravedig list
+    default: true
+  gravedig.admin:
+    description: allows /gravedig reload
+    default: op

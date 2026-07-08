@@ -1,0 +1,30 @@
+# Сообщения GraveDig, формат MiniMessage.
+prefix: "<gradient:#7a5c2e:#c9a66b>[GraveDig]</gradient> "
+
+death:
+  grave-created: "<gray>Твоя могила на <coords><gray>. Захвати щётку.</gray>"
+  protected-for: "<gray>Только ты можешь копать её <minutes> мин.</gray>"
+
+dig:
+  protected: "<red>Эта могила пока принадлежит <owner>.</red>"
+  portion-armor: "<green>Ты выметаешь броню.</green>"
+  portion-hotbar: "<green>Ты выметаешь вещи из хотбара.</green>"
+  portion-rest: "<green>Ты выметаешь остальные вещи.</green>"
+  xp: "<aqua>+<xp> опыта возвращено.</aqua>"
+  done: "<gray>Могила рассыпается.</gray>"
+
+grave:
+  now-public: "<yellow>Твоя могила на <coords> <yellow>больше не защищена.</yellow>"
+  expired: "<gray>Твоя могила на <coords> <gray>истлела.</gray>"
+
+command:
+  reloaded: "<green>Конфиг и локали перезагружены.</green>"
+  no-permission: "<red>Тебе нельзя.</red>"
+  usage: "<gray>использование: /gravedig reload | list</gray>"
+  list-header: "<gray>Твои могилы:</gray>"
+  list-entry: "<gray> - <coords> <gray>порций осталось: <portions></gray>"
+  list-empty: "<gray>Могил нет. Так держать.</gray>"
+
+startup:
+  enabled: "GraveDig включён, локаль: <locale>"
+  disabled: "GraveDig выключен"
