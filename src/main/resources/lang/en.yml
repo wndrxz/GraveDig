@@ -28,3 +28,6 @@ command:
 startup:
   enabled: "GraveDig enabled, locale: <locale>"
   disabled: "GraveDig disabled"
+
+chat:
+  click-to-copy: "click to copy"

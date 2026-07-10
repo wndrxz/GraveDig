@@ -28,3 +28,6 @@ command:
 startup:
   enabled: "GraveDig включён, локаль: <locale>"
   disabled: "GraveDig выключен"
+
+chat:
+  click-to-copy: "нажми, чтобы скопировать"
