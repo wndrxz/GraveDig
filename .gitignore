@@ -12,3 +12,4 @@ bin/
 .settings/
 hs_err_pid*.log
 local.properties
+build-log.txt
