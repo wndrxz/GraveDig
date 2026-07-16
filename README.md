@@ -7,15 +7,15 @@ portions: armor first, then hotbar, then the rest, then XP.
 No GUIs and no holograms on purpose. One block, a brush, clickable
 coords in chat.
 
-Status: 0.1.0. Core loop works, tests pass, hasn't been on a live
-server yet.
+Status: 0.1.2. Live-tested on Paper and Folia 1.20.4: death, digging,
+protection, expiry, restarts. Rough edges left are in Known issues.
 
 ## Requirements
 
 - Paper 1.20.4+ (brushes and suspicious blocks appeared in 1.20)
 - Java 21
-- Folia: all scheduling goes through region/async schedulers, but I
-  haven't run it on actual Folia yet
+- Folia: supported and tested on 1.20.4, scheduling goes through the
+  region/async schedulers
 - no Spigot (Adventure + MiniMessage)
 
 ## Building
@@ -74,7 +74,6 @@ en/ru locale parity.
 - pistons can move the grave block
 - items that other plugins add to death drops are lost
 - two deaths on the same block: the newer grave wins
-- not Folia-tested yet, only the scheduling is done by the book
 
 ## License
 
