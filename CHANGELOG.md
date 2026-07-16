@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.1 — 2026-07-16
+
+First live-server pass found the obvious thing: suspicious blocks have
+gravity. Falling graves left the plugin pointing at empty air.
+
+- grave blocks are placed without physics and are stopped from falling
+  (support gone, whatever) — no more graves wandering off their key
+- mid-air deaths: the spot scan now sinks to the ground instead of
+  planting the block in the sky, where it fell apart instantly
+- orphan sweep: if a tracked grave's block is gone (fell on an older
+  version, /setblock over it...), the loot is spilled at the old spot
+  and the entry cleaned up, instead of haunting /gravedig list forever
+
 ## 0.1.0 — 2026-07-15
 
 First playable cut. Everything below is new because everything is new.

@@ -65,7 +65,7 @@ public final class GraveManager {
     public void create(Player player, List<Portion> portions, int xp) {
         Block spot = findSpot(player.getLocation());
         Material mat = chooseMaterial(spot);
-        spot.setType(mat);
+        spot.setType(mat, false); // no physics! suspicious blocks have gravity and WILL take a dive
         BlockKey key = BlockKey.of(spot);
         Grave grave = new Grave(key, player.getUniqueId(), player.getName(),
                 System.currentTimeMillis(), mat, portions, xp);
@@ -86,12 +86,22 @@ public final class GraveManager {
         World world = death.getWorld();
         int y = Math.max(world.getMinHeight(), Math.min(death.getBlockY(), world.getMaxHeight() - 1));
         Block feet = world.getBlockAt(death.getBlockX(), y, death.getBlockZ());
-        // feet block is usually air. died inside a wall? poke upward a bit
-        for (int i = 0; i < 5 && feet.getY() + i < world.getMaxHeight(); i++) {
-            Block c = feet.getRelative(0, i, 0);
-            if (c.getType().isAir() || c.isLiquid()) return c;
+        if (!feet.getType().isAir() && !feet.isLiquid()) {
+            // died inside a wall? poke upward a bit
+            for (int i = 1; i < 5 && feet.getY() + i < world.getMaxHeight(); i++) {
+                Block c = feet.getRelative(0, i, 0);
+                if (c.getType().isAir() || c.isLiquid()) return c;
+            }
+            return feet; // give up and overwrite. rude, but items beat a flower
         }
-        return feet; // give up and overwrite. rude, but items beat a flower
+        // died mid-air: sink to the ground, nobody looks for a grave in the sky.
+        // stops above liquids too, a grave resting on water reads better than at the bottom
+        Block spot = feet;
+        while (spot.getY() > world.getMinHeight()
+                && spot.getRelative(0, -1, 0).getType().isAir()) {
+            spot = spot.getRelative(0, -1, 0);
+        }
+        return spot;
     }
 
     private Material chooseMaterial(Block spot) {
@@ -177,8 +187,11 @@ public final class GraveManager {
 
     // -- expiry sweep, runs on the global scheduler --
 
+    private int sweepPasses; // orphan checks tick on a slower beat than expiry
+
     public void sweep() {
         long now = System.currentTimeMillis();
+        boolean orphanPass = ++sweepPasses % 30 == 0;
         for (Grave grave : graves.values()) {
             if (grave.protectionJustEnded(now, cfg.protectMs())) {
                 Player owner = plugin.getServer().getPlayer(grave.owner());
@@ -187,8 +200,26 @@ public final class GraveManager {
                             Placeholder.component("coords", coords(grave.key())));
                 }
             }
-            if (grave.isExpired(now, cfg.expireMs())) expire(grave);
+            if (grave.isExpired(now, cfg.expireMs())) {
+                expire(grave);
+                continue;
+            }
+            if (orphanPass) checkOrphan(grave);
         }
+    }
+
+    /** block gone but grave still tracked (fell before 0.1.1, /setblock, whatever): spill and forget */
+    private void checkOrphan(Grave grave) {
+        World world = plugin.getServer().getWorld(grave.key().worldId());
+        if (world == null) return;
+        if (!world.isChunkLoaded(grave.key().x() >> 4, grave.key().z() >> 4)) return;
+        Location loc = grave.key().toLocation(world);
+        sched.atBlock(loc, () -> {
+            Block block = world.getBlockAt(loc);
+            if (block.getType() == grave.placedAs()) return; // still standing, all good
+            if (!graves.containsKey(grave.key())) return; // finished meanwhile
+            dumpAll(grave, block);
+        });
     }
 
     private void expire(Grave grave) {

@@ -8,12 +8,14 @@ import dev.wndrxz.gravedig.util.BlockKey;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -61,6 +63,14 @@ public final class DigListener implements Listener {
         event.setDropItems(false);
         event.setExpToDrop(0);
         graves.dumpAll(grave, event.getBlock());
+    }
+
+    // suspicious blocks have gravity. a falling grave lands somewhere else (or breaks)
+    // while the plugin still points at the old spot, so graves simply don't fall
+    @EventHandler(ignoreCancelled = true)
+    public void onFall(EntityChangeBlockEvent event) {
+        if (!(event.getEntity() instanceof FallingBlock)) return;
+        if (graves.get(BlockKey.of(event.getBlock())) != null) event.setCancelled(true);
     }
 
     // graves shouldn't pop from creeper holes. TODO pistons can still shove them
