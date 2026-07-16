@@ -70,7 +70,8 @@ public final class GraveManager {
         BlockKey key = BlockKey.of(spot);
         Grave grave = new Grave(key, player.getUniqueId(), player.getName(),
                 System.currentTimeMillis(), mat, portions, xp);
-        graves.put(key, grave);
+        Grave evicted = graves.put(key, grave);
+        if (evicted != null) spill(evicted, spot); // died twice on one block: old loot pops out instead of vanishing
         persist();
 
         if (cfg.deathCoords()) {
@@ -183,6 +184,12 @@ public final class GraveManager {
     /** block got broken (or admin said so): everything out at once */
     public void dumpAll(Grave grave, Block block) {
         if (graves.remove(grave.key()) == null) return;
+        spill(grave, block);
+        persist();
+    }
+
+    /** dumpAll minus the map bookkeeping, for graves already evicted from the map */
+    private void spill(Grave grave, Block block) {
         List<ItemStack> everything = new ArrayList<>();
         for (Portion p : grave.portions()) everything.addAll(p.items());
         dropItems(block, everything);
@@ -192,7 +199,6 @@ public final class GraveManager {
                     block.getLocation().add(0.5, 1.0, 0.5), ExperienceOrb.class);
             orb.setExperience(xp);
         }
-        persist();
     }
 
     // -- expiry sweep, runs on the global scheduler --
