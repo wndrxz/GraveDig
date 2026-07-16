@@ -15,6 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -74,10 +76,32 @@ public final class DigListener implements Listener {
         if (graves.get(BlockKey.of(event.getBlock())) != null) event.setCancelled(true);
     }
 
-    // graves shouldn't pop from creeper holes. TODO pistons can still shove them
+    // graves shouldn't pop from creeper holes
     @EventHandler(ignoreCancelled = true)
     public void onEntityExplode(EntityExplodeEvent event) {
         event.blockList().removeIf(b -> graves.get(BlockKey.of(b)) != null);
+    }
+
+    // ...and pistons don't get to play with them either. simpler to veto the
+    // whole push than to chase the block around and rekey the grave
+    @EventHandler(ignoreCancelled = true)
+    public void onPistonExtend(BlockPistonExtendEvent event) {
+        for (Block b : event.getBlocks()) {
+            if (graves.get(BlockKey.of(b)) != null) {
+                event.setCancelled(true);
+                return;
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPistonRetract(BlockPistonRetractEvent event) {
+        for (Block b : event.getBlocks()) {
+            if (graves.get(BlockKey.of(b)) != null) {
+                event.setCancelled(true);
+                return;
+            }
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
