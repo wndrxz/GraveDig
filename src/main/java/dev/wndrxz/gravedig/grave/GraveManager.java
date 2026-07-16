@@ -21,6 +21,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -86,22 +87,31 @@ public final class GraveManager {
         World world = death.getWorld();
         int y = Math.max(world.getMinHeight(), Math.min(death.getBlockY(), world.getMaxHeight() - 1));
         Block feet = world.getBlockAt(death.getBlockX(), y, death.getBlockZ());
-        if (!feet.getType().isAir() && !feet.isLiquid()) {
+        if (!canHostGrave(feet)) {
             // died inside a wall? poke upward a bit
             for (int i = 1; i < 5 && feet.getY() + i < world.getMaxHeight(); i++) {
                 Block c = feet.getRelative(0, i, 0);
-                if (c.getType().isAir() || c.isLiquid()) return c;
+                if (canHostGrave(c)) return c;
             }
             return feet; // give up and overwrite. rude, but items beat a flower
         }
-        // died mid-air: sink to the ground, nobody looks for a grave in the sky.
-        // stops above liquids too, a grave resting on water reads better than at the bottom
+        // died mid-air: sink to the ground, nobody looks for a grave in the sky
         Block spot = feet;
-        while (spot.getY() > world.getMinHeight()
-                && spot.getRelative(0, -1, 0).getType().isAir()) {
+        while (spot.getY() > world.getMinHeight() && sinkable(spot.getRelative(0, -1, 0))) {
             spot = spot.getRelative(0, -1, 0);
         }
         return spot;
+    }
+
+    /** air, liquid or squishy stuff (grass, flowers, snow) - fine to swap for a grave */
+    private boolean canHostGrave(Block b) {
+        return b.getType().isAir() || b.isLiquid() || Tag.REPLACEABLE.isTagged(b.getType());
+    }
+
+    /** sink through air and plants, but rest on top of liquids, not at the bottom */
+    private boolean sinkable(Block below) {
+        if (below.isLiquid()) return false;
+        return below.getType().isAir() || Tag.REPLACEABLE.isTagged(below.getType());
     }
 
     private Material chooseMaterial(Block spot) {

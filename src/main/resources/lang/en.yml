@@ -12,6 +12,7 @@ dig:
   portion-rest: "<green>You brush out the rest of the stuff.</green>"
   xp: "<aqua>+<xp> xp recovered.</aqua>"
   done: "<gray>The grave crumbles away.</gray>"
+  broke-all: "<gray>The grave breaks open and spills everything.</gray>"
 
 grave:
   now-public: "<yellow>Your grave at <coords> <yellow>is no longer protected.</yellow>"

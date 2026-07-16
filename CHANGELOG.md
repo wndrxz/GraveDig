@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.2 — 2026-07-16
+
+Folia pass came back clean, just two rough edges from the field notes.
+
+- dying on grass/flowers/snow no longer perches the grave on top of the
+  plant — replaceable blocks get swapped for the grave like air would
+  (vanilla `replaceable` tag, so the list stays in sync with the game)
+- breaking a grave now says so in chat instead of silently spilling
+
 ## 0.1.1 — 2026-07-16
 
 First live-server pass found the obvious thing: suspicious blocks have

@@ -12,6 +12,7 @@ dig:
   portion-rest: "<green>Ты выметаешь остальные вещи.</green>"
   xp: "<aqua>+<xp> опыта возвращено.</aqua>"
   done: "<gray>Могила рассыпается.</gray>"
+  broke-all: "<gray>Могила разламывается и высыпает всё разом.</gray>"
 
 grave:
   now-public: "<yellow>Твоя могила на <coords> <yellow>больше не защищена.</yellow>"

@@ -63,6 +63,7 @@ public final class DigListener implements Listener {
         event.setDropItems(false);
         event.setExpToDrop(0);
         graves.dumpAll(grave, event.getBlock());
+        locale.send(event.getPlayer(), "dig.broke-all");
     }
 
     // suspicious blocks have gravity. a falling grave lands somewhere else (or breaks)
