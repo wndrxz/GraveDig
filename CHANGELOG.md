@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0 — 2026-07-17
+
+Cleared the known-issues list down to plugin-added drops.
+
+- pistons can no longer push or pull grave blocks — the whole move is
+  vetoed, easier than chasing the block around and rekeying the grave
+- dying twice on the same block no longer eats the first grave: the old
+  loot pops out on the ground when the new grave takes the spot
+
 ## 0.1.2 — 2026-07-16
 
 Folia pass came back clean, just two rough edges from the field notes.

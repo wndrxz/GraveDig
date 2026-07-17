@@ -71,9 +71,7 @@ en/ru locale parity.
 
 ## Known issues
 
-- pistons can move the grave block
 - items that other plugins add to death drops are lost
-- two deaths on the same block: the newer grave wins
 
 ## License
 
