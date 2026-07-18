@@ -1,5 +1,5 @@
-# GraveDig config. Defaults are tuned for quick manual testing,
-# bump the timers for a real server.
+# GraveDig config. Defaults are tuned for a normal survival server,
+# shorten the timers if you just want to poke at the plugin.
 
 # locale: auto = pick from JVM default, fallback en. shipped: en, ru
 locale: auto
@@ -10,9 +10,10 @@ grave:
   # can pin it: SUSPICIOUS_SAND or SUSPICIOUS_GRAVEL
   block: auto
   # minutes the grave is owner-only. 0 = public right away
-  protect-minutes: 5
+  protect-minutes: 15
   # minutes until the grave expires and is gone. 0 = never
-  expire-minutes: 30
+  # 1440 = a day. graves keep ticking while the owner is offline
+  expire-minutes: 1440
   # drop leftover items on the ground when the grave expires
   drop-on-expire: true
   # breaking the block dumps everything at once (protection still applies)
@@ -20,8 +21,8 @@ grave:
 
 dig:
   # right-clicks with a brush needed to free one portion.
-  # 2 is fast for testing, vanilla brushing feel is more like 5-6
-  clicks-per-portion: 2
+  # 5 is about the vanilla brushing feel, drop to 2 for quick testing
+  clicks-per-portion: 5
   # brushing sound + particles on each click
   effects: true
 

@@ -36,11 +36,11 @@ public final class ConfigManager {
         locale = resolveLocale(c.getString("locale", "auto"), shippedLocales);
         enabled = c.getBoolean("grave.enabled", true);
         graveBlock = parseGraveBlock(c.getString("grave.block", "auto"));
-        protectMs = minutesToMs(c.getInt("grave.protect-minutes", 5));
-        expireMs = minutesToMs(c.getInt("grave.expire-minutes", 30));
+        protectMs = minutesToMs(c.getInt("grave.protect-minutes", 15));
+        expireMs = minutesToMs(c.getInt("grave.expire-minutes", 1440));
         dropOnExpire = c.getBoolean("grave.drop-on-expire", true);
         breakDropsAll = c.getBoolean("grave.break-drops-all", true);
-        clicksPerPortion = Math.max(1, c.getInt("dig.clicks-per-portion", 2));
+        clicksPerPortion = Math.max(1, c.getInt("dig.clicks-per-portion", 5));
         digEffects = c.getBoolean("dig.effects", true);
         xpEnabled = c.getBoolean("xp.enabled", true);
         xpPercent = clamp01(c.getDouble("xp.percent", 1.0));
