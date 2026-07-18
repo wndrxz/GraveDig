@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.2.1 — 2026-07-18
+
+Nobody should get my test bench as their server settings. The shipped
+defaults were still the quick-testing ones: graves gone in half an
+hour, two brush clicks per portion.
+
+- expire-minutes 30 → 1440: a grave now survives a day, not a coffee
+  break. it still ticks while the owner is offline, the config warns
+  about that now
+- protect-minutes 5 → 15
+- clicks-per-portion 2 → 5, close to how vanilla brushing feels
+- code fallbacks match the shipped file, and the readme no longer
+  claims 0.1.2
+
+Existing servers keep their config.yml, this only changes what new
+installs get.
+
 ## 0.2.0 — 2026-07-17
 
 Cleared the known-issues list down to plugin-added drops.

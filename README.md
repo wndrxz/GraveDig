@@ -7,7 +7,7 @@ portions: armor first, then hotbar, then the rest, then XP.
 No GUIs and no holograms on purpose. One block, a brush, clickable
 coords in chat.
 
-Status: 0.1.2. Live-tested on Paper and Folia 1.20.4: death, digging,
+Status: 0.2.1. Live-tested on Paper and Folia 1.20.4: death, digging,
 protection, expiry, restarts. Rough edges left are in Known issues.
 
 ## Requirements
@@ -32,11 +32,11 @@ config and lang files.
 
 - death → grave block at the death spot. Sand on sandy ground, gravel
   otherwise, or pin one in config. Coords arrive in chat, click to copy.
-- first 5 minutes (configurable) the grave is owner-only, then it goes
+- first 15 minutes (configurable) the grave is owner-only, then it goes
   public and the owner gets a warning message
-- right-click with a brush. Every 2 clicks a portion drops out:
+- right-click with a brush. Every 5 clicks a portion drops out:
   armor+offhand → hotbar → everything else → xp
-- after the last portion the block disappears. After 30 minutes
+- after the last portion the block disappears. After a day
   (configurable) the grave expires
 - breaking the block dumps everything at once (can be disabled),
   explosions skip grave blocks
